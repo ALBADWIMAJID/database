@@ -1,0 +1,21 @@
+import pandas as pd
+import random
+import string
+
+# Генерация данных
+def generate_data(num_records):
+    data = []
+    for _ in range(num_records):
+        name = ''.join(random.choices(string.ascii_uppercase, k=6))
+        age = random.randint(18, 80)
+        salary = round(random.uniform(20000, 100000), 2)
+        data.append({'Name': name, 'Age': age, 'Salary': salary})
+    return data
+
+# Создание DataFrame
+num_records = 10000
+data = generate_data(num_records)
+df = pd.DataFrame(data)
+
+# Сохранение в CSV
+df.to_csv('data.csv', index=False)
