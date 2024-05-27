@@ -1,0 +1,390 @@
+# Database connection function
+def get_db_connection():
+    import mysql.connector
+    return mysql.connector.connect(
+        host="127.0.0.1",
+        port=3306,
+        user="root",
+        password="ALbadwimajid1",
+        database="thelast",
+    )
+
+# Laboratory functions
+def create_laboratory_record(name, analysis, results, shift, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "INSERT INTO laboratories (name, Analysis, results, shift, day, month, year) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    values = (name, analysis, results, shift, day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def get_laboratory_records():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM laboratories")
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
+def update_laboratory_record(old_name, old_shift, old_day, old_month, old_year, name, analysis, results, shift, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = """
+    UPDATE laboratories 
+    SET name=%s, Analysis=%s, results=%s, shift=%s, day=%s, month=%s, year=%s 
+    WHERE name=%s AND shift=%s AND day=%s AND month=%s AND year=%s
+    """
+    values = (name, analysis, results, shift, day, month, year, old_name, old_shift, old_day, old_month, old_year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def delete_laboratory_record(name, shift, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "DELETE FROM laboratories WHERE name=%s AND shift=%s AND day=%s AND month=%s AND year=%s"
+    values = (name, shift, day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+# Pharmacy functions
+def create_pharmacy_record(name, shift, gender, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "INSERT INTO pharmacy (name, shift, gender, day, month, year) VALUES (%s, %s, %s, %s, %s, %s)"
+    values = (name, shift, gender, day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def get_pharmacy_records():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("""
+        SELECT pharmacy.name, pharmacy.shift, pharmacy.gender, pharmacy.day, pharmacy.month, pharmacy.year
+        FROM pharmacy
+    """)
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
+def update_pharmacy_record(old_name, old_shift, old_day, old_month, old_year, name, shift, gender, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = """
+    UPDATE pharmacy 
+    SET name=%s, shift=%s, gender=%s, day=%s, month=%s, year=%s 
+    WHERE name=%s AND shift=%s AND day=%s AND month=%s AND year=%s
+    """
+    values = (name, shift, gender, day, month, year, old_name, old_shift, old_day, old_month, old_year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def delete_pharmacy_record(name, shift, day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "DELETE FROM pharmacy WHERE name=%s AND shift=%s AND day=%s AND month=%s AND year=%s"
+    values = (name, shift, day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+# Administration functions
+def create_administration_record(name, gender,  day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "INSERT INTO administration (name, gender,  day, month, year) VALUES (%s, %s, %s, %s, %s)"
+    values = (name, gender,  day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def get_administration_records():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM administration")
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
+def update_administration_record(old_name,  old_day, old_month, old_year, name, gender,  day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = """
+    UPDATE administration 
+    SET name=%s, gender=%s,  day=%s, month=%s, year=%s 
+    WHERE name=%s AND day=%s AND month=%s AND year=%s
+    """
+    values = (name, gender,  day, month, year, old_name,  old_day, old_month, old_year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def delete_administration_record(name,  day, month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "DELETE FROM administration WHERE name=%s AND day=%s AND month=%s AND year=%s"
+    values = (name,  day, month, year)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+# Room functions
+def create_room_record(number_rooms, category):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "INSERT INTO rooms (number_rooms, Categories) VALUES (%s, %s)"
+    values = (number_rooms, category)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def get_room_records():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM rooms")
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
+def update_room_record(number_rooms, category):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = """
+    UPDATE rooms 
+    SET Categories=%s
+    WHERE number_rooms=%s
+    """
+    values = (category, number_rooms)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+def delete_room_record(number_rooms):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "DELETE FROM rooms WHERE number_rooms=%s"
+    values = (number_rooms,)
+    cursor.execute(sql, values)
+    db.commit()
+    cursor.close()
+    db.close()
+
+# Additional functions for counting and analysis
+def count_lab_analyses(month, year):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "SELECT COUNT(*) FROM laboratories WHERE month = %s AND year = %s"
+    values = (month, year)
+    cursor.execute(sql, values)
+    result = cursor.fetchone()[0]
+    cursor.close()
+    db.close()
+    return result
+
+def get_lab_analyses_count():
+    month = int(input("Enter month: "))
+    year = int(input("Enter year: "))
+    count = count_lab_analyses(month, year)
+    print(f"Number of laboratory analyses in {month}/{year}: {count}")
+
+def count_gender_administration(gender):
+    db = get_db_connection()
+    cursor = db.cursor()
+    sql = "SELECT COUNT(*) FROM administration WHERE gender = %s"
+    values = (gender,)
+    cursor.execute(sql, values)
+    result = cursor.fetchone()[0]
+    cursor.close()
+    db.close()
+    return result
+
+def get_gender_distribution():
+    gender = input("Enter gender (Male/Female): ")
+    count = count_gender_administration(gender)
+    print(f"Number of {gender} employees in administration: {count}")
+
+# Menu and main function
+def show_menu():
+    print("1. Add Laboratory Record")
+    print("2. View Laboratory Records")
+    print("3. Update Laboratory Record")
+    print("4. Delete Laboratory Record")
+    print("5. Add Pharmacy Record")
+    print("6. View Pharmacy Records")
+    print("7. Update Pharmacy Record")
+    print("8. Delete Pharmacy Record")
+    print("9. Add Administration Record")
+    print("10. View Administration Records")
+    print("11. Update Administration Record")
+    print("12. Delete Administration Record")
+    print("13. Add Room Record")
+    print("14. View Room Records")
+    print("15. Update Room Record")
+    print("16. Delete Room Record")
+    print("17. Count Laboratory Analyses")
+    print("18. Count Gender in Administration")
+    print("19. Exit")
+
+def main():
+    while True:
+        show_menu()
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            name = input("Enter name: ")
+            analysis = input("Enter analysis: ")
+            results = input("Enter results: ")
+            shift = input("Enter shift: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            create_laboratory_record(name, analysis, results, shift, day, month, year)
+        
+        elif choice == '2':
+            records = get_laboratory_records()
+            for record in records:
+                print(record)
+        
+        elif choice == '3':
+            old_name = input("Enter old name: ")
+            old_shift = input("Enter old shift: ")
+            old_day = int(input("Enter old day: "))
+            old_month = int(input("Enter old month: "))
+            old_year = int(input("Enter old year: "))
+            name = input("Enter new name: ")
+            analysis = input("Enter new analysis: ")
+            results = input("Enter new results: ")
+            shift = input("Enter new shift: ")
+            day = int(input("Enter new day: "))
+            month = int(input("Enter new month: "))
+            year = int(input("Enter new year: "))
+            update_laboratory_record(old_name, old_shift, old_day, old_month, old_year, name, analysis, results, shift, day, month, year)
+        
+        elif choice == '4':
+            name = input("Enter name: ")
+            shift = input("Enter shift: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            delete_laboratory_record(name, shift, day, month, year)
+        
+        elif choice == '5':
+            name = input("Enter name: ")
+            shift = input("Enter shift: ")
+            gender = input("Enter gender: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            create_pharmacy_record(name, shift, gender, day, month, year)
+        
+        elif choice == '6':
+            records = get_pharmacy_records()
+            for record in records:
+                print(record)
+        
+        elif choice == '7':
+            old_name = input("Enter old name: ")
+            old_shift = input("Enter old shift: ")
+            old_day = int(input("Enter old day: "))
+            old_month = int(input("Enter old month: "))
+            old_year = int(input("Enter old year: "))
+            name = input("Enter new name: ")
+            shift = input("Enter new shift: ")
+            gender = input("Enter new gender: ")
+            day = int(input("Enter new day: "))
+            month = int(input("Enter new month: "))
+            year = int(input("Enter new year: "))
+            update_pharmacy_record(old_name, old_shift, old_day, old_month, old_year, name, shift, gender, day, month, year)
+        
+        elif choice == '8':
+            name = input("Enter name: ")
+            shift = input("Enter shift: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            delete_pharmacy_record(name, shift, day, month, year)
+        
+        elif choice == '9':
+            name = input("Enter name: ")
+            gender = input("Enter gender: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            create_administration_record(name, gender,  day, month, year)
+        
+        elif choice == '10':
+            records = get_administration_records()
+            for record in records:
+                print(record)
+        
+        elif choice == '11':
+            old_name = input("Enter old name: ")
+            old_day = int(input("Enter old day: "))
+            old_month = int(input("Enter old month: "))
+            old_year = int(input("Enter old year: "))
+            name = input("Enter new name: ")
+            gender = input("Enter new gender: ")
+
+            month = int(input("Enter new month: "))
+            year = int(input("Enter new year: "))
+            update_administration_record(old_name,  old_day, old_month, old_year, name, gender,  day, month, year)
+        
+        elif choice == '12':
+            name = input("Enter name: ")
+            day = int(input("Enter day: "))
+            month = int(input("Enter month: "))
+            year = int(input("Enter year: "))
+            delete_administration_record(name,  day, month, year)
+        
+        elif choice == '13':
+            number_rooms = int(input("Enter number of rooms: "))
+            category = input("Enter category: ")
+            create_room_record(number_rooms, category)
+        
+        elif choice == '14':
+            records = get_room_records()
+            for record in records:
+                print(record)
+        
+        elif choice == '15':
+            number_rooms = int(input("Enter number of rooms: "))
+            category = input("Enter new category: ")
+            update_room_record(number_rooms, category)
+        
+        elif choice == '16':
+            number_rooms = int(input("Enter number of rooms: "))
+            delete_room_record(number_rooms)
+        
+        elif choice == '17':
+            get_lab_analyses_count()
+        
+        elif choice == '18':
+            get_gender_distribution()
+        
+        elif choice == '19':
+            break
+        
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
