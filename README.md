@@ -6,3 +6,4 @@ this is my sql data
 3 lab3 https://github.com/ALBADWIMAJID/sql/issues/4#issue-2177203638
 https://github.com/ALBADWIMAJID/database/issues/7#issue-2310023637
 
+https://github.com/ALBADWIMAJID/database/issues/8#issue-2341618772
